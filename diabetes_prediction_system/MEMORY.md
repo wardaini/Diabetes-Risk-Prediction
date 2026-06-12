@@ -1,0 +1,1 @@
+- [diabetes-prediction-project](user_project.md) - Website deteksi dini penyakit diabetes dengan ML model

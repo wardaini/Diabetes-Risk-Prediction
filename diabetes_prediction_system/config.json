@@ -1,0 +1,238 @@
+{
+    "model_type": "random_forest",
+    "model_name": "Diabetes Prediction Model",
+    "version": "1.0.0",
+    "created_date": "2026-06-06",
+    "threshold": {
+        "low": 0.18,
+        "medium": 0.36
+    },
+    "display_threshold": {
+        "low": 0.25,
+        "medium": 0.50,
+        "description": "Threshold untuk tampilan user (0-100%). threshold model 0.36 dipetakan ke 50% tampilan"
+    },
+    "features": [
+        "HighBP",
+        "HighChol",
+        "CholCheck",
+        "BMI",
+        "PhysActivity",
+        "GenHlth"
+    ],
+    "feature_descriptions": {
+        "HighBP": "Tekanan darah tinggi (0=Tidak, 1=Ya)",
+        "CholCheck": "Pemeriksaan kolesterol dalam 5 tahun (0=Tidak, 1=Ya)",
+        "GenHlth": "Kesehatan umum (1=Sangat Baik s/d 5=Sangat Buruk)",
+        "PhysActivity": "Aktif berolahraga (0=Tidak, 1=Ya)",
+        "HighChol": "Kolesterol tinggi (0=Tidak, 1=Ya)",
+        "BMI": "Indeks Massa Tubuh"
+    },
+    "section_questions": {
+        "Data Kesehatan Dasar": {
+            "description": "Informasi dasar tentang kesehatan Anda",
+            "questions": [
+                {
+                    "id": "usia",
+                    "question": "Berapa usia Anda saat ini?",
+                    "type": "number",
+                    "feature": "BMI",
+                    "min": 18,
+                    "max": 100,
+                    "placeholder": "Misal: 45"
+                },
+                {
+                    "id": "berat_badan",
+                    "question": "Berapa berat badan Anda saat ini (kg)?",
+                    "type": "number",
+                    "feature": "BMI",
+                    "min": 30,
+                    "max": 200,
+                    "placeholder": "Misal: 70"
+                },
+                {
+                    "id": "tinggi_badan",
+                    "question": "Berapa tinggi badan Anda (cm)?",
+                    "type": "number",
+                    "feature": "BMI",
+                    "min": 120,
+                    "max": 220,
+                    "placeholder": "Misal: 170"
+                },
+                {
+                    "id": "lingkar_pinggang",
+                    "question": "Berapa ukuran lingkar pinggang Anda (cm)?",
+                    "type": "number",
+                    "feature": "BMI",
+                    "min": 50,
+                    "max": 200,
+                    "placeholder": "Misal: 85"
+                },
+                {
+                    "id": "riwayat_diabetes_keluarga",
+                    "question": "Apakah ada anggota keluarga yang mengidap diabetes?",
+                    "type": "select",
+                    "feature": "BMI",
+                    "options": [
+                        {"value": "tidak", "label": "Tidak ada"},
+                        {"value": "saudara", "label": "Ada (saudara kandung)"},
+                        {"value": "orang_tua", "label": "Ada (orang tua)"},
+                        {"value": "kakek_nenek", "label": "Ada (kakek/nenek)"},
+                        {"value": "semua", "label": "Ada (multiple keluarga)"}
+                    ]
+                },
+                {
+                    "id": "jenis_kelamin",
+                    "question": "Apa jenis kelamin Anda?",
+                    "type": "select",
+                    "feature": "BMI",
+                    "options": [
+                        {"value": "laki_laki", "label": "Laki-laki"},
+                        {"value": "perempuan", "label": "Perempuan"}
+                    ]
+                }
+            ]
+        },
+        "Kondisi Kesehatan": {
+            "description": "Informasi tentang kondisi kesehatan Anda saat ini",
+            "questions": [
+                {
+                    "id": "riwayat_hipertensi_keluarga",
+                    "question": "Apakah ada riwayat keluarga dengan hipertensi/tekanan darah tinggi?",
+                    "type": "select",
+                    "feature": "HighBP",
+                    "options": [
+                        {"value": "tidak", "label": "Tidak ada"},
+                        {"value": "ada", "label": "Ada"}
+                    ]
+                },
+                {
+                    "id": "tekanan_darah_tinggi",
+                    "question": "Apakah Anda pernah didiagnosis mengidap tekanan darah tinggi?",
+                    "type": "select",
+                    "feature": "HighBP",
+                    "options": [
+                        {"value": "tidak", "label": "Tidak"},
+                        {"value": "ya", "label": "Ya"}
+                    ]
+                },
+                {
+                    "id": "riwayat_kolesterol_keluarga",
+                    "question": "Apakah ada riwayat keluarga dengan kolesterol tinggi?",
+                    "type": "select",
+                    "feature": "HighChol",
+                    "options": [
+                        {"value": "tidak", "label": "Tidak ada"},
+                        {"value": "ada", "label": "Ada"}
+                    ]
+                },
+                {
+                    "id": "kolesterol_tinggi",
+                    "question": "Apakah Anda pernah didiagnosis mengidap kolesterol tinggi?",
+                    "type": "select",
+                    "feature": "HighChol",
+                    "options": [
+                        {"value": "tidak", "label": "Tidak"},
+                        {"value": "ya", "label": "Ya"}
+                    ]
+                },
+                {
+                    "id": "cek_kolesterol_5tahun",
+                    "question": "Apakah Anda pernah memeriksa kolesterol dalam 5 tahun terakhir?",
+                    "type": "select",
+                    "feature": "HighChol",
+                    "options": [
+                        {"value": "ya", "label": "Ya"},
+                        {"value": "tidak", "label": "Tidak"}
+                    ]
+                },
+                {
+                    "id": "obat_hipertensi",
+                    "question": "Apakah Anda sedang mengonsumsi obat tekanan darah tinggi?",
+                    "type": "select",
+                    "feature": "HighBP",
+                    "options": [
+                        {"value": "tidak", "label": "Tidak"},
+                        {"value": "ya", "label": "Ya"}
+                    ]
+                }
+            ]
+        },
+        "Gaya Hidup": {
+            "description": "Informasi tentang gaya hidup dan aktivitas harian Anda",
+            "questions": [
+                {
+                    "id": "frekuensi_olahraga",
+                    "question": "Berapa sering Anda berolahraga dalam seminggu?",
+                    "type": "select",
+                    "feature": "PhysActivity",
+                    "options": [
+                        {"value": "tidak_pernah", "label": "Tidak pernah"},
+                        {"value": "1_kali", "label": "1 kali seminggu"},
+                        {"value": "2_3_kali", "label": "2-3 kali seminggu"},
+                        {"value": "4_lebih", "label": "4 kali atau lebih"}
+                    ]
+                },
+                {
+                    "id": "aktivitas_fisik",
+                    "question": "Apakah Anda melakukan aktivitas fisikminimal 30 menit setiap hari?",
+                    "type": "select",
+                    "feature": "PhysActivity",
+                    "options": [
+                        {"value": "tidak", "label": "Tidak"},
+                        {"value": "ya", "label": "Ya"}
+                    ]
+                },
+                {
+                    "id": "merokok",
+                    "question": "Apakah Anda merokok?",
+                    "type": "select",
+                    "feature": "PhysActivity",
+                    "options": [
+                        {"value": "tidak", "label": "Tidak pernah"},
+                        {"value": "former", "label": "Mantan perokok"},
+                        {"value": "ya", "label": "Ya, masih merokok"}
+                    ]
+                },
+                {
+                    "id": "konsumsi_alkohol",
+                    "question": "Seberapa sering Anda mengonsumsi alkohol?",
+                    "type": "select",
+                    "feature": "GenHlth",
+                    "options": [
+                        {"value": "tidak", "label": "Tidak pernah"},
+                        {"value": "jarang", "label": "Jarang (1-2x sebulan)"},
+                        {"value": "sedang", "label": "Sedang (1-3x seminggu)"},
+                        {"value": "sering", "label": "Sering (4x atau lebih seminggu)"}
+                    ]
+                },
+                {
+                    "id": "konsumsi_sayur",
+                    "question": "Berapa porsi sayur dan buah yang Anda konsumsi setiap hari?",
+                    "type": "select",
+                    "feature": "GenHlth",
+                    "options": [
+                        {"value": "sangat_sedikit", "label": "Sangat sedikit (< 1 porsi)"},
+                        {"value": "sedikit", "label": "Sedikit (1-2 porsi)"},
+                        {"value": "cukup", "label": "Cukup (3-4 porsi)"},
+                        {"value": "banyak", "label": "Banyak (5 porsi atau lebih)"}
+                    ]
+                },
+                {
+                    "id": "makanan_berlemak",
+                    "question": "Seberapa sering Anda mengonsumsi makanan tinggi lemak?",
+                    "type": "select",
+                    "feature": "HighChol",
+                    "options": [
+                        {"value": "jarang", "label": "Jarang"},
+                        {"value": "sedang", "label": "Sedang"},
+                        {"value": "sering", "label": "Sering"},
+                        {"value": "sangat_sering", "label": "Sangat sering"}
+                    ]
+                }
+            ]
+        }
+    },
+    "description": "Konfigurasi model deteksi diabetes dengan 18 pertanyaan terstruktur",
+    "notes": "Setiap pertanyaan terhubung dengan fitur model untuk mempengaruhi nilai prediksi"
+}
