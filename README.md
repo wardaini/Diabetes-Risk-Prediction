@@ -27,8 +27,8 @@ Proyek ini dikerjakan dalam rangka **Magang Mandiri Batch 4 (MSIB) di PT Vinix S
 ---
 
 ## Project Structure
+```
 diabetes_prediction_system/
-
 ├── notebook/
 │   ├── diabetes_prediction.ipynb
 │   └── outputs/
@@ -53,7 +53,7 @@ diabetes_prediction_system/
 │   ├── styles.css
 │   └── script.js
 └── README.md
-
+```
 
 ## Project Workflow
 
