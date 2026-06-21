@@ -91,115 +91,90 @@ document.addEventListener('DOMContentLoaded', function() {
     // Konversi nilai pertanyaan ke nilai fitur model
     function convertToModelFeatures(formData) {
         const modelData = {
-            BMI: 0,
-            HighBP: 0,
-            HighChol: 0,
-            PhysActivity: 0,
-            GenHlth: 1,
-            CholCheck: 0
+            HighBP              : 0,
+            HighChol            : 0,
+            CholCheck           : 0,
+            BMI                 : 25,
+            Stroke              : 0,
+            HeartDiseaseorAttack: 0,
+            PhysActivity        : 0,
+            GenHlth             : 3,
+            DiffWalk            : 0,
+            Age                 : 1
         };
 
-        // Hitung BMI dari berat dan tinggi badan
+        // ── BMI ──────────────────────────────────────────────────────
         const berat = parseFloat(formData.berat_badan);
         const tinggi = parseFloat(formData.tinggi_badan);
-
         if (berat && tinggi && tinggi > 0) {
             const tinggiMeter = tinggi / 100;
-            const bmi = berat / (tinggiMeter * tinggiMeter);
-            modelData.BMI = Math.round(bmi * 10) / 10;
+            modelData.BMI = Math.round((berat / (tinggiMeter * tinggiMeter)) * 10) / 10;
         }
+        modelData.BMI = Math.min(60, Math.max(10, modelData.BMI));
 
-        // Usia влияет на риск диабета (через BMI)
-        if (formData.usia) {
-            const usia = parseInt(formData.usia);
-            // Если возраст > 45, увеличиваем базовый риск
-            if (usia > 45) {
-                modelData.BMI += 2; // Повышаем "виртуальный" BMI
-            }
-        }
+        // ── Age (kategori 1-13) ───────────────────────────────────────
+        const usia = parseInt(formData.usia) || 30;
+        if      (usia < 25) modelData.Age = 1;
+        else if (usia < 30) modelData.Age = 2;
+        else if (usia < 35) modelData.Age = 3;
+        else if (usia < 40) modelData.Age = 4;
+        else if (usia < 45) modelData.Age = 5;
+        else if (usia < 50) modelData.Age = 6;
+        else if (usia < 55) modelData.Age = 7;
+        else if (usia < 60) modelData.Age = 8;
+        else if (usia < 65) modelData.Age = 9;
+        else if (usia < 70) modelData.Age = 10;
+        else if (usia < 75) modelData.Age = 11;
+        else if (usia < 80) modelData.Age = 12;
+        else                modelData.Age = 13;
 
-        // Riwayat keluarga diabetes → meningkat risiko
-        const riwayatDiabetes = formData.riwayat_diabetes_keluarga;
-        if (riwayatDiabetes && riwayatDiabetes !== 'tidak') {
-            modelData.BMI += 3; // Повышаем риск
-        }
-
-        // Kondisi Kesehatan - HighBP
-        const riwayatHipertensi = formData.riwayat_hipertensi_keluarga;
-        const tekananDarahTinggi = formData.tekanan_darah_tinggi;
-        const obatHipertensi = formData.obat_hipertensi;
-
-        if (riwayatHipertensi === 'ada' || tekananDarahTinggi === 'ya' || obatHipertensi === 'ya') {
+        // ── HighBP ───────────────────────────────────────────────────
+        if (formData.tekanan_darah_tinggi === 'ya' ||
+            formData.obat_hipertensi === 'ya' ||
+            formData.riwayat_hipertensi_keluarga === 'ada') {
             modelData.HighBP = 1;
         }
 
-        // Kondisi Kesehatan - HighChol
-        const riwayatKolesterol = formData.riwayat_kolesterol_keluarga;
-        const kolesterolTinggi = formData.kolesterol_tinggi;
-        const cekKolesterol = formData.cek_kolesterol_5tahun;
-
-        if (riwayatKolesterol === 'ada' || kolesterolTinggi === 'ya') {
+        // ── HighChol ─────────────────────────────────────────────────
+        if (formData.kolesterol_tinggi === 'ya' ||
+            formData.riwayat_kolesterol_keluarga === 'ada' ||
+            formData.makanan_berlemak === 'sangat_sering' ||
+            formData.makanan_berlemak === 'sering') {
             modelData.HighChol = 1;
         }
 
-        if (cekKolesterol === 'ya') {
-            modelData.CholCheck = 1;
-        }
+        // ── CholCheck ────────────────────────────────────────────────
+        modelData.CholCheck = formData.cek_kolesterol_5tahun === 'ya' ? 1 : 0;
 
-        // Gaya Hidup - PhysActivity
-        const frekuensiOlahraga = formData.frekuensi_olahraga;
-        const aktivitasFisik = formData.aktivitas_fisik;
-
-        if (frekuensiOlahraga === '2_3_kali' || frekuensiOlahraga === '4_lebih') {
+        // ── PhysActivity ─────────────────────────────────────────────
+        if (formData.aktivitas_fisik === 'ya' ||
+            formData.frekuensi_olahraga === '2_3_kali' ||
+            formData.frekuensi_olahraga === '4_lebih') {
             modelData.PhysActivity = 1;
         }
 
-        if (aktivitasFisik === 'ya') {
-            modelData.PhysActivity = 1;
-        }
+        // ── GenHlth (1=Sangat Baik, 5=Sangat Buruk) ──────────────────
+        let genHlth = 2; // default cukup baik
+        if (formData.merokok === 'ya')               genHlth += 1;
+        if (formData.merokok === 'former')            genHlth += 0.5;
+        if (formData.konsumsi_alkohol === 'sering')   genHlth += 1;
+        if (formData.konsumsi_sayur === 'banyak')     genHlth -= 1;
+        if (formData.konsumsi_sayur === 'sangat_sedikit') genHlth += 1;
+        if (formData.makanan_berlemak === 'sangat_sering') genHlth += 1;
+        if (formData.tekanan_darah_tinggi === 'ya')   genHlth += 0.5;
+        if (formData.kolesterol_tinggi === 'ya')      genHlth += 0.5;
+        modelData.GenHlth = Math.min(5, Math.max(1, Math.round(genHlth)));
 
-        // Gaya Hidup - GenHlth
-        const merokok = formData.merokok;
-        const alkohol = formData.konsumsi_alkohol;
-        const sayur = formData.konsumsi_sayur;
-        const lemak = formData.makanan_berlemak;
+        // ── Stroke ───────────────────────────────────────────────────
+        modelData.Stroke = formData.riwayat_stroke === 'ya' ? 1 : 0;
 
-        // Merokok снижает здоровье
-        if (merokok === 'ya') {
-            modelData.GenHlth += 2;
-        } else if (merokok === 'former') {
-            modelData.GenHlth += 1;
-        }
+        // ── HeartDiseaseorAttack ──────────────────────────────────────
+        modelData.HeartDiseaseorAttack = formData.riwayat_jantung === 'ya' ? 1 : 0;
 
-        // Alkohol
-        if (alkohol === 'sering') {
-            modelData.GenHlth += 2;
-        } else if (alkohol === 'sedang') {
-            modelData.GenHlth += 1;
-        }
+        // ── DiffWalk ─────────────────────────────────────────────────
+        modelData.DiffWalk = formData.sulit_berjalan === 'ya' ? 1 : 0;
 
-        // Konsumsi sayur - baik untuk kesehatan
-        if (sayur === 'banyak' || sayur === 'cukup') {
-            modelData.GenHlth = Math.max(1, modelData.GenHlth - 1);
-        } else if (sayur === 'sangat_sedikit') {
-            modelData.GenHlth += 2;
-        }
-
-        // Makanan berlemak
-        if (lemak === 'sangat_sering' || lemak === 'sering') {
-            modelData.HighChol = 1;
-            modelData.GenHlth += 1;
-        }
-
-        // BMI validation
-        if (modelData.BMI < 10 || modelData.BMI > 60) {
-            modelData.BMI = 25; // Default value
-        }
-
-        // GenHlth should be 1-5
-        modelData.GenHlth = Math.min(5, Math.max(1, modelData.GenHlth));
-
-        console.log('Converted model data:', modelData);
+        console.log('Model data:', modelData);
         return modelData;
     }
 
@@ -278,10 +253,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Get risk level and color class based on probability
-    function getRiskLevel(probability, threshold) {
-        if (probability < threshold.low) {
+    function getRiskLevel(probability) {
+        if (probability < 0.30) {
             return { level: 'Rendah', class: 'low', color: '#06d6a0' };
-        } else if (probability < threshold.medium) {
+        } else if (probability < 0.50) {
             return { level: 'Sedang', class: 'medium', color: '#ffd166' };
         } else {
             return { level: 'Tinggi', class: 'high', color: '#ef476f' };
@@ -296,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const displayThreshold = data.display_threshold || data.threshold;
 
         // Get risk level berdasarkan display_threshold (untuk tampilan yang lebih masuk akal)
-        const risk = getRiskLevel(probability, displayThreshold);
+        const risk = getRiskLevel(probability);
 
         // Update risk circle
         const riskCircle = document.getElementById('riskCircle');
