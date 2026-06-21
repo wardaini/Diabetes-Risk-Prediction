@@ -1,4 +1,4 @@
----
+
 
 ## Project Workflow
 
@@ -17,7 +17,6 @@ Variabel GenHlth, HighBP, BMI, DiffWalk, dan HighChol menunjukkan korelasi terti
 #### Mutual Information
 ![Mutual Information](notebook/outputs/03_mutual_information.png)
 
----
 
 ### 2. Feature Selection
 Dari 21 fitur awal, dipilih **10 fitur** berdasarkan Correlation Analysis, Mutual Information, dan Stacked Bar Chart:
