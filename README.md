@@ -30,51 +30,28 @@ Proyek ini dikerjakan dalam rangka **Magang Mandiri Batch 4 (MSIB) di PT Vinix S
 diabetes_prediction_system/
 
 ├── notebook/
-
 │   ├── diabetes_prediction.ipynb
-
 │   └── outputs/
-
 │       ├── 01_distribusi_target.png
-
 │       ├── 02_correlation_heatmap.png
-
 │       ├── 03_mutual_information.png
-
 │       ├── 04_metrik_base_model.png
-
 │       ├── 05_confusion_matrix_base.png
-
 │       ├── 06_roc_curve_base.png
-
 │       ├── 07_feature_importance_rf.png
-
 │       ├── 08_feature_importance_lr.png
-
 │       ├── 09_confusion_matrix_tuned.png
-
 │       ├── 10_roc_curve_tuned.png
-
 │       ├── 11_perbandingan_base_optimized.png
-
 │       └── diabetes_rf_model.pkl
-
 ├── flask/
-
 │   ├── app.py
-
 │   ├── diabetes_rf_model.pkl
-
 │   ├── config.json
-
 │   ├── requirements.txt
-
 │   ├── index.html
-
 │   ├── styles.css
-
 │   └── script.js
-
 └── README.md
 
 
