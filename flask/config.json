@@ -1,0 +1,52 @@
+{
+    "model_type": "random_forest",
+    "model_name": "Diabetes Prediction Model",
+    "version": "2.0.0",
+    "created_date": "2026-06-21",
+    "threshold": 0.5,
+    "features": [
+        "HighBP",
+        "HighChol",
+        "CholCheck",
+        "BMI",
+        "Stroke",
+        "HeartDiseaseorAttack",
+        "PhysActivity",
+        "GenHlth",
+        "DiffWalk",
+        "Age"
+    ],
+    "feature_descriptions": {
+        "HighBP": "Tekanan darah tinggi (0=Tidak, 1=Ya)",
+        "HighChol": "Kolesterol tinggi (0=Tidak, 1=Ya)",
+        "CholCheck": "Pemeriksaan kolesterol dalam 5 tahun (0=Tidak, 1=Ya)",
+        "BMI": "Indeks Massa Tubuh",
+        "Stroke": "Riwayat stroke (0=Tidak, 1=Ya)",
+        "HeartDiseaseorAttack": "Riwayat penyakit jantung (0=Tidak, 1=Ya)",
+        "PhysActivity": "Aktif berolahraga (0=Tidak, 1=Ya)",
+        "GenHlth": "Kesehatan umum (1=Sangat Baik s/d 5=Sangat Buruk)",
+        "DiffWalk": "Kesulitan berjalan (0=Tidak, 1=Ya)",
+        "Age": "Kategori usia (1=18-24 s/d 13=80+)"
+    },
+    "age_categories": {
+        "1": "18-24 tahun",
+        "2": "25-29 tahun",
+        "3": "30-34 tahun",
+        "4": "35-39 tahun",
+        "5": "40-44 tahun",
+        "6": "45-49 tahun",
+        "7": "50-54 tahun",
+        "8": "55-59 tahun",
+        "9": "60-64 tahun",
+        "10": "65-69 tahun",
+        "11": "70-74 tahun",
+        "12": "75-79 tahun",
+        "13": "80+ tahun"
+    },
+    "risk_levels": {
+        "low": "Rendah (< 30%)",
+        "medium": "Sedang (30% - 50%)",
+        "high": "Tinggi (> 50%)"
+    },
+    "description": "Model prediksi risiko diabetes berbasis 10 fitur gaya hidup CDC BRFSS 2014"
+}

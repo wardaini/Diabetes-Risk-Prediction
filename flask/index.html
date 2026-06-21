@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deteksi Dini Penyakit Diabetes</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-background"></div>
+        <div class="container">
+            <div class="logo">
+                <h1>Diabetes Predictor</h1>
+            </div>
+            <p class="tagline">Deteksi Dini Risiko Diabetes Berdasarkan Gaya Hidup</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="hero-section">
+                <h2>Cek Risiko Diabetes Anda</h2>
+                <p>Isi data di bawah ini untuk mengetahui risiko diabetes Anda berdasarkan gaya hidup sehari-hari.</p>
+            </div>
+
+            <div class="form-container">
+                <form id="predictionForm" class="prediction-form">
+                    <!-- Bagian 1: Data Kesehatan Dasar (6 Pertanyaan) - Terhubung dengan BMI -->
+                    <div class="form-section">
+                        <h3>📊 Data Kesehatan Dasar</h3>
+                        <p class="section-description">Informasi dasar tentang kondisi kesehatan Anda</p>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="usia">1. Berapa usia Anda saat ini?</label>
+                                <input type="number" id="usia" name="usia" min="18" max="100" placeholder="Misal: 45" required>
+                                <span class="input-hint">Masukkan usia Anda dalam tahun</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="jenis_kelamin">2. Apa jenis kelamin Anda?</label>
+                                <select id="jenis_kelamin" name="jenis_kelamin" required>
+                                    <option value="">Pilih...</option>
+                                    <option value="laki_laki">Laki-laki</option>
+                                    <option value="perempuan">Perempuan</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="berat_badan">3. Berapa berat badan Anda saat ini (kg)?</label>
+                                <input type="number" id="berat_badan" name="berat_badan" min="30" max="200" step="0.1" placeholder="Misal: 70" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tinggi_badan">4. Berapa tinggi badan Anda (cm)?</label>
+                                <input type="number" id="tinggi_badan" name="tinggi_badan" min="120" max="220" placeholder="Misal: 170" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lingkar_pinggang">5. Berapa ukuran lingkar pinggang Anda (cm)?</label>
+                                <input type="number" id="lingkar_pinggang" name="lingkar_pinggang" min="50" max="200" placeholder="Misal: 85">
+                                <span class="input-hint">Diukur di pusar</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="riwayat_diabetes_keluarga">6. Apakah ada anggota keluarga yang mengidap diabetes?</label>
+                                <select id="riwayat_diabetes_keluarga" name="riwayat_diabetes_keluarga" required>
+                                    <option value="">Pilih...</option>
+                                    <option value="tidak">Tidak ada</option>
+                                    <option value="saudara">Ada (saudara kandung)</option>
+                                    <option value="orang_tua">Ada (orang tua)</option>
+                                    <option value="kakek_nenek">Ada (kakek/nenek)</option>
+                                    <option value="semua">Ada (multiple keluarga)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bagian 2: Kondisi Kesehatan (6 Pertanyaan) - Terhubung dengan HighBP dan HighChol -->
+                    <div class="form-section">
+                        <h3>🩺 Kondisi Kesehatan</h3>
+                        <p class="section-description">Informasi tentang kondisi kesehatan Anda saat ini</p>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="riwayat_hipertensi_keluarga">1. Apakah ada riwayat keluarga dengan hipertensi/tekanan darah tinggi?</label>
+                                <select id="riwayat_hipertensi_keluarga" name="riwayat_hipertensi_keluarga" required>
+                                    <option value="">Pilih...</option>
+                                    <option value="tidak">Tidak ada</option>
+                                    <option value="ada">Ada</option>
+                                </select>
+                                <span class="input-hint">Termasuk orang tua, saudara, atau kakek/nenek</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="tekanan_darah_tinggi">2. Apakah Anda pernah didiagnosis mengidap tekanan darah tinggi?</label>
+                                <select id="tekanan_darah_tinggi" name="tekanan_darah_tinggi" required>
+                                    <option value="">Pilih...</option>
+                                    <option value="tidak">Tidak</option>
+                                    <option value="ya">Ya</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="riwayat_kolesterol_keluarga">3. Apakah ada riwayat keluarga dengan kolesterol tinggi?</label>
+                                <select id="riwayat_kolesterol_keluarga" name="riwayat_kolesterol_keluarga" required>
+                                    <option value="">Pilih...</option>
+                                    <option value="tidak">Tidak ada</option>
+                                    <option value="ada">Ada</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="kolesterol_tinggi">4. Apakah Anda pernah didiagnosis mengidap kolesterol tinggi?</label>
+                                <select id="kolesterol_tinggi" name="kolesterol_tinggi" required>
+                                    <option value="">Pilih...</option>
+                                    <option value="tidak">Tidak</option>
+                                    <option value="ya">Ya</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cek_kolesterol_5tahun">5. Apakah Anda pernah memeriksa kolesterol dalam 5 tahun terakhir?</label>
+                                <select id="cek_kolesterol_5tahun" name="cek_kolesterol_5tahun" required>
+                                    <option value="">Pilih...</option>
+                                    <option value="ya">Ya</option>
+                                    <option value="tidak">Tidak</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="obat_hipertensi">6. Apakah Anda sedang mengonsumsi obat tekanan darah tinggi?</label>
+                                <select id="obat_hipertensi" name="obat_hipertensi" required>
+                                    <option value="">Pilih...</option>
+                                    <option value="tidak">Tidak</option>
+                                    <option value="ya">Ya</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bagian 3: Gaya Hidup (6 Pertanyaan) - Terhubung dengan PhysActivity dan GenHlth -->
+                    <div class="form-section">
+                        <h3>🏃 Gaya Hidup</h3>
+                        <p class="section-description">Informasi tentang gaya hidup dan aktivitas harian Anda</p>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="frekuensi_olahraga">1. Berapa sering Anda berolahraga dalam seminggu?</label>
+                                <select id="frekuensi_olahraga" name="frekuensi_olahraga" required>
+                                    <option value="">Pilih...</option>
+                                    <option value="tidak_pernah">Tidak pernah</option>
+                                    <option value="1_kali">1 kali seminggu</option>
+                                    <option value="2_3_kali">2-3 kali seminggu</option>
+                                    <option value="4_lebih">4 kali atau lebih</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="aktivitas_fisik">2. Apakah Anda melakukan aktivitas fisik minimal 30 menit setiap hari?</label>
+                                <select id="aktivitas_fisik" name="aktivitas_fisik" required>
+                                    <option value="">Pilih...</option>
+                                    <option value="tidak">Tidak</option>
+                                    <option value="ya">Ya</option>
+                                </select>
+                                <span class="input-hint">Termasuk berjalan kaki, naik tangga, pekerjaan rumah</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="merokok">3. Apakah Anda merokok?</label>
+                                <select id="merokok" name="merokok" required>
+                                    <option value="">Pilih...</option>
+                                    <option value="tidak">Tidak pernah</option>
+                                    <option value="former">Mantan perokok</option>
+                                    <option value="ya">Ya, masih merokok</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="konsumsi_alkohol">4. Seberapa sering Anda mengonsumsi alkohol?</label>
+                                <select id="konsumsi_alkohol" name="konsumsi_alkohol" required>
+                                    <option value="">Pilih...</option>
+                                    <option value="tidak">Tidak pernah</option>
+                                    <option value="jarang">Jarang (1-2x sebulan)</option>
+                                    <option value="sedang">Sedang (1-3x seminggu)</option>
+                                    <option value="sering">Sering (4x atau lebih seminggu)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="konsumsi_sayur">5. Berapa porsi sayur dan buah yang Anda konsumsi setiap hari?</label>
+                                <select id="konsumsi_sayur" name="konsumsi_sayur" required>
+                                    <option value="">Pilih...</option>
+                                    <option value="sangat_sedikit">Sangat sedikit (&lt; 1 porsi)</option>
+                                    <option value="sedikit">Sedikit (1-2 porsi)</option>
+                                    <option value="cukup">Cukup (3-4 porsi)</option>
+                                    <option value="banyak">Banyak (5 porsi atau lebih)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="makanan_berlemak">6. Seberapa sering Anda mengonsumsi makanan tinggi lemak?</label>
+                                <select id="makanan_berlemak" name="makanan_berlemak" required>
+                                    <option value="">Pilih...</option>
+                                    <option value="jarang">Jarang</option>
+                                    <option value="sedang">Sedang</option>
+                                    <option value="sering">Sering</option>
+                                    <option value="sangat_sering">Sangat sering</option>
+                                </select>
+                                <span class="input-hint">Makanan berlemak: gorengan, daging merah, makanan cepat saji</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="predictBtn">
+                            <span class="btn-icon">🔮</span>
+                            Prediksi Risiko Diabetes
+                        </button>
+                        <button type="reset" class="btn btn-secondary">
+                            <span class="btn-icon">🔄</span>
+                            Reset Form
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="result-container" id="resultContainer" style="display: none;">
+                <div class="result-card">
+                    <h3>📋 Hasil Prediksi</h3>
+                    <div class="result-content">
+                        <div class="risk-indicator" id="riskIndicator">
+                            <div class="risk-circle" id="riskCircle">
+                                <span class="risk-percentage" id="riskPercentage">0%</span>
+                            </div>
+                            <div class="risk-label" id="riskLabel">Menunggu...</div>
+                        </div>
+                        <div class="risk-details">
+                            <p>Tingkat Risiko: <strong id="riskLevel">-</strong></p>
+                            <p>Probabilitas: <strong id="probability">-</strong></p>
+                        </div>
+                    </div>
+                    <div class="health-tips" id="healthTips">
+                        <h4>💡 Saran Kesehatan</h4>
+                        <ul id="tipsList">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Sedang memproses prediksi...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>⚠️ <strong>Disclaimer:</strong> Hasil prediksi ini hanya sebagai alat bantu deteksi dini. Untuk diagnosis akurat, konsultasikan dengan dokter.</p>
+            <p>&copy; 2026 Diabetes Prediction System</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
