@@ -1,3 +1,81 @@
+# Diabetes Risk Prediction System
+## Deteksi Dini Risiko Diabetes Berbasis Gaya Hidup Menggunakan Machine Learning
+
+[![Python](https://img.shields.io/badge/Python-3.x-blue)](https://python.org)
+[![Scikit-Learn](https://img.shields.io/badge/ScikitLearn-1.6.1-orange)](https://scikit-learn.org)
+[![Flask](https://img.shields.io/badge/Flask-2.3-green)](https://flask.palletsprojects.com)
+
+---
+
+## Overview
+Proyek ini membangun sistem prediksi risiko diabetes berbasis Machine Learning menggunakan dataset CDC Behavioral Risk Factor Surveillance System (BRFSS) 2014. Model Random Forest Classifier dioptimalkan melalui Hyperparameter Tuning dan Cross Validation, kemudian di-deploy sebagai aplikasi web interaktif menggunakan Flask.
+
+Proyek ini dikerjakan dalam rangka **Magang Mandiri Batch 4 (MSIB) di PT Vinix Seven Aurum**, Divisi Python Machine Learning.
+
+---
+
+## Dataset
+| Item | Detail |
+|---|---|
+| Dataset | CDC Diabetes Health Indicators (BRFSS 2014) |
+| Source | UCI Machine Learning Repository |
+| Original Records | 253.680 |
+| After Cleaning | 229.474 |
+| Class Distribution | 85% No Diabetes / 15% Diabetes |
+| Target Variable | Diabetes_binary (0 = No Diabetes, 1 = Diabetes) |
+
+---
+
+## Project Structure
+diabetes_prediction_system/
+
+├── notebook/
+
+│   ├── diabetes_prediction.ipynb
+
+│   └── outputs/
+
+│       ├── 01_distribusi_target.png
+
+│       ├── 02_correlation_heatmap.png
+
+│       ├── 03_mutual_information.png
+
+│       ├── 04_metrik_base_model.png
+
+│       ├── 05_confusion_matrix_base.png
+
+│       ├── 06_roc_curve_base.png
+
+│       ├── 07_feature_importance_rf.png
+
+│       ├── 08_feature_importance_lr.png
+
+│       ├── 09_confusion_matrix_tuned.png
+
+│       ├── 10_roc_curve_tuned.png
+
+│       ├── 11_perbandingan_base_optimized.png
+
+│       └── diabetes_rf_model.pkl
+
+├── flask/
+
+│   ├── app.py
+
+│   ├── diabetes_rf_model.pkl
+
+│   ├── config.json
+
+│   ├── requirements.txt
+
+│   ├── index.html
+
+│   ├── styles.css
+
+│   └── script.js
+
+└── README.md
 
 
 ## Project Workflow
