@@ -8,9 +8,7 @@
 ---
 
 ## Overview
-Proyek ini membangun sistem prediksi risiko diabetes berbasis Machine Learning menggunakan dataset CDC Behavioral Risk Factor Surveillance System (BRFSS) 2014. Model Random Forest Classifier dioptimalkan melalui Hyperparameter Tuning dan Cross Validation, kemudian di-deploy sebagai aplikasi web interaktif menggunakan Flask.
-
-Proyek ini dikerjakan dalam rangka **Magang Mandiri Batch 4 (MSIB) di PT Vinix Seven Aurum**, Divisi Python Machine Learning.
+Proyek ini membangun sistem prediksi risiko diabetes berbasis Machine Learning menggunakan dataset CDC Behavioral Risk Factor Surveillance System (BRFSS) 2014. Model Random Forest Classifier dioptimalkan melalui Hyperparameter Tuning dan Cross Validation, kemudian diintegrasikan sebagai aplikasi web interaktif menggunakan Flask.
 
 ---
 
