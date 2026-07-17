@@ -8,7 +8,7 @@
 ---
 
 ## Overview
-Proyek ini membangun sistem prediksi risiko diabetes berbasis Machine Learning menggunakan dataset CDC Behavioral Risk Factor Surveillance System (BRFSS) 2014. Model Random Forest Classifier dioptimalkan melalui Hyperparameter Tuning dan Cross Validation, kemudian diintegrasikan sebagai aplikasi web interaktif menggunakan Flask.
+Proyek ini membangun sistem prediksi risiko diabetes berbasis Machine Learning menggunakan dataset CDC Behavioral Risk Factor Surveillance System (BRFSS) 2015. Model Random Forest Classifier dioptimalkan melalui Hyperparameter Tuning dan Cross Validation, kemudian diintegrasikan sebagai aplikasi web interaktif menggunakan Flask.
 
 ---
 
@@ -263,10 +263,10 @@ http://localhost:5000
 ## Author
 **Wardatul A'ani**
 NIM: 230170100
-Informatics Engineering — Universitas Malikussaleh
+Informatics Engineering - Universitas Malikussaleh
 Lhokseumawe, Aceh, Indonesia
 
-Program: Magang Mandiri Batch 4 (MSIB) — PT Vinix Seven Aurum
+Program: Magang Mandiri Batch 4 (MSIB) - PT Vinix Seven Aurum
 Divisi: Python Machine Learning
-Periode: 9 Februari 2026 – 26 Juni 2026
+Periode: 23 Februari 2026 - 23 Juni 2026
 GitHub Repo: https://github.com/wardaini/Diabetes-Risk-Prediction
