@@ -216,5 +216,5 @@ Lhokseumawe, Aceh, Indonesia
 
 Program: Magang Mandiri Batch 4 (MSIB) — PT Vinix Seven Aurum
 Divisi: Python Machine Learning
-Periode: 9 Februari 2026 – 26 Juni 2026
+Periode: 23 Februari 2026 – 23 Juni 2026
 GitHub Repo: https://github.com/melindasiburian/diabetes_prediction_system
