@@ -48,5 +48,5 @@
         "medium": "Sedang (30% - 50%)",
         "high": "Tinggi (> 50%)"
     },
-    "description": "Model prediksi risiko diabetes berbasis 10 fitur gaya hidup CDC BRFSS 2014"
+    "description": "Model prediksi risiko diabetes berbasis 10 fitur gaya hidup CDC BRFSS 2015"
 }
