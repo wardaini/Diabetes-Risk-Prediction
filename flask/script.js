@@ -61,34 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
     };
 
-    // Mapping pertanyaan ke fitur model
-    const questionToFeature = {
-        // Data Kesehatan Dasar → BMI
-        'usia': 'BMI',
-        'jenis_kelamin': 'BMI',
-        'berat_badan': 'BMI',
-        'tinggi_badan': 'BMI',
-        'lingkar_pinggang': 'BMI',
-        'riwayat_diabetes_keluarga': 'BMI',
-
-        // Kondisi Kesehatan → HighBP dan HighChol
-        'riwayat_hipertensi_keluarga': 'HighBP',
-        'tekanan_darah_tinggi': 'HighBP',
-        'riwayat_kolesterol_keluarga': 'HighChol',
-        'kolesterol_tinggi': 'HighChol',
-        'cek_kolesterol_5tahun': 'HighChol',
-        'obat_hipertensi': 'HighBP',
-
-        // Gaya Hidup → PhysActivity dan GenHlth
-        'frekuensi_olahraga': 'PhysActivity',
-        'aktivitas_fisik': 'PhysActivity',
-        'merokok': 'GenHlth',
-        'konsumsi_alkohol': 'GenHlth',
-        'konsumsi_sayur': 'GenHlth',
-        'makanan_berlemak': 'HighChol'
-    };
-
-    // Konversi nilai pertanyaan ke nilai fitur model
+    // Konversi nilai form ke fitur model (1 pertanyaan = 1 fitur, tanpa estimasi tambahan)
     function convertToModelFeatures(formData) {
         const modelData = {
             HighBP              : 0,
@@ -103,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
             Age                 : 1
         };
 
-        // ── BMI ──────────────────────────────────────────────────────
+        // ── BMI = berat(kg) / tinggi(m)^2 ───────────────────────────
         const berat = parseFloat(formData.berat_badan);
         const tinggi = parseFloat(formData.tinggi_badan);
         if (berat && tinggi && tinggi > 0) {
@@ -112,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         modelData.BMI = Math.min(60, Math.max(10, modelData.BMI));
 
-        // ── Age (kategori 1-13) ───────────────────────────────────────
+        // ── Age (kategori 1-13, sesuai skema BRFSS) ─────────────────
         const usia = parseInt(formData.usia) || 30;
         if      (usia < 25) modelData.Age = 1;
         else if (usia < 30) modelData.Age = 2;
@@ -129,41 +102,19 @@ document.addEventListener('DOMContentLoaded', function() {
         else                modelData.Age = 13;
 
         // ── HighBP ───────────────────────────────────────────────────
-        if (formData.tekanan_darah_tinggi === 'ya' ||
-            formData.obat_hipertensi === 'ya' ||
-            formData.riwayat_hipertensi_keluarga === 'ada') {
-            modelData.HighBP = 1;
-        }
+        modelData.HighBP = formData.tekanan_darah_tinggi === 'ya' ? 1 : 0;
 
         // ── HighChol ─────────────────────────────────────────────────
-        if (formData.kolesterol_tinggi === 'ya' ||
-            formData.riwayat_kolesterol_keluarga === 'ada' ||
-            formData.makanan_berlemak === 'sangat_sering' ||
-            formData.makanan_berlemak === 'sering') {
-            modelData.HighChol = 1;
-        }
+        modelData.HighChol = formData.kolesterol_tinggi === 'ya' ? 1 : 0;
 
         // ── CholCheck ────────────────────────────────────────────────
         modelData.CholCheck = formData.cek_kolesterol_5tahun === 'ya' ? 1 : 0;
 
         // ── PhysActivity ─────────────────────────────────────────────
-        if (formData.aktivitas_fisik === 'ya' ||
-            formData.frekuensi_olahraga === '2_3_kali' ||
-            formData.frekuensi_olahraga === '4_lebih') {
-            modelData.PhysActivity = 1;
-        }
+        modelData.PhysActivity = formData.aktivitas_fisik === 'ya' ? 1 : 0;
 
-        // ── GenHlth (1=Sangat Baik, 5=Sangat Buruk) ──────────────────
-        let genHlth = 2; // default cukup baik
-        if (formData.merokok === 'ya')               genHlth += 1;
-        if (formData.merokok === 'former')            genHlth += 0.5;
-        if (formData.konsumsi_alkohol === 'sering')   genHlth += 1;
-        if (formData.konsumsi_sayur === 'banyak')     genHlth -= 1;
-        if (formData.konsumsi_sayur === 'sangat_sedikit') genHlth += 1;
-        if (formData.makanan_berlemak === 'sangat_sering') genHlth += 1;
-        if (formData.tekanan_darah_tinggi === 'ya')   genHlth += 0.5;
-        if (formData.kolesterol_tinggi === 'ya')      genHlth += 0.5;
-        modelData.GenHlth = Math.min(5, Math.max(1, Math.round(genHlth)));
+        // ── GenHlth (1=Sangat Baik ... 5=Buruk), diambil langsung dari form ─
+        modelData.GenHlth = parseInt(formData.kesehatan_umum) || 3;
 
         // ── Stroke ───────────────────────────────────────────────────
         modelData.Stroke = formData.riwayat_stroke === 'ya' ? 1 : 0;
